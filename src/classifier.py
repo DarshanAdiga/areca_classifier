@@ -3,7 +3,9 @@ import random
 import numpy as np
 from datetime import datetime
 
-from tensorflow import keras
+import keras
+from keras.models import load_model
+
 from PIL import Image, ImageOps
 import cv2
 
@@ -29,7 +31,7 @@ class Predictor:
             debug_img_loc (str, optional): Location where images and predictions to be saved. Defaults to '/tmp/debug_imgs/'.
         """
         self.model = self.__load_model(model_path)
-        print('Loaded the model from {}'.format(self.model_path))
+        print('Loaded the model from {}'.format(model_path))
         
         # Debugging settings
         self.debug_img_loc = debug_img_loc
@@ -39,7 +41,7 @@ class Predictor:
             os.makedirs(debug_img_loc)
 
     def __load_model(self, model_path):
-        model = keras.models.load_model(model_path)
+        model = load_model(model_path)
         return model
 
     def __crop_to_std_size(self, img):

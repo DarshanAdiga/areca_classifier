@@ -18,9 +18,11 @@ def run_test():
             pred = predictor.predict_on_frame(frame_np)
             print('Prediction:', CLASS_DICT[pred])
             # Wait for 2 seconds
-            time.sleep(2)
+            time.sleep(5)
         else:
+            print('No frame captured! Exiting now..')
             img_reader.close()
+            break
 
     print('Done with the test')
 

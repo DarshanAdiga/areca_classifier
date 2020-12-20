@@ -13,7 +13,7 @@ class ImageReader:
            frame Numpy: Image in numpy array format
            """
         # read next frame
-        has_frame, frame = cap.read() # Returns (Boolean,Numpy Array)
+        has_frame, frame = self.cap.read() # Returns (Boolean,Numpy Array)
         return has_frame,frame
     
     def save_a_frame(self, file_path):
