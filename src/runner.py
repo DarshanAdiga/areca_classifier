@@ -5,7 +5,7 @@ import image_reader
 import time
 
 def run_test():
-    model_path = '/home/adiga/my_work/arecanut-images/areca_classifier/model/model_20201126_1448'
+    model_path = 'model/model_20201126_1448'
     url = "rtsp://192.168.1.100:8080/h264_ulaw.sdp"
 
     predictor = classifier.Predictor(model_path)

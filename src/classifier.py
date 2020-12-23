@@ -57,7 +57,7 @@ class Predictor:
         frame_np: Image in numpy array format
         """
         # Load image from numpy array
-        img = Image.fromarray(img_path)
+        img = Image.fromarray(frame_np)
         img = self.__crop_to_std_size(img)
         img = self.__reshape_to_std_size(img)
         # Convert back to numpy
@@ -99,7 +99,9 @@ class Predictor:
         # Transform the image
         img_np = self.__transform_np_image(frame_np)
         # Run predictions
-        pred = self.model.predict([img_np])[0]
+        img_np = np.array([img_np])
+        pred = self.model.predict(img_np)
+        pred = np.argmax(pred, axis=1)[0]
         # Optionally save the input and output
         if self.debug > 0:
             self.__save_frame_randomly(frame_np, img_np, pred)
