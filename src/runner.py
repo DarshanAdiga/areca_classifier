@@ -1,22 +1,24 @@
 import classifier
 from classifier import CLASS_DICT
 import image_reader
-import category_controller
+from category_controller import CategoryController
 
 import time
 
 def run_test():
     model_path = 'model/model_20201126_1448'
-    url = "rtsp://192.168.1.100:8080/h264_ulaw.sdp"
+    url = "rtsp://192.168.1.101:8080/h264_ulaw.sdp"
 
     PREDICTION_DELAY_SEC = 1 
 
     predictor = classifier.Predictor(model_path)
-    img_reader = image_reader.ImageReader(url)
+    #img_reader = image_reader.ImageReader(url)
     category_controller = CategoryController()
 
     print('Starting the test')
     while True:
+        # WARN: Initializing ImageReader everytime is a hack!
+        img_reader = image_reader.ImageReader(url)
         (has_frame,frame_np) = img_reader.get_a_frame()
         if has_frame:
             pred = predictor.predict_on_frame(frame_np)

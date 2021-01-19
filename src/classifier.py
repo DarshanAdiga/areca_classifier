@@ -99,14 +99,15 @@ class Predictor:
         """
 
         # Transform the image
-        img_np = self.__transform_np_image(frame_np)
+        trans_np = self.__transform_np_image(frame_np)
+        img_np = trans_np
         # Run predictions
         img_np = np.array([img_np])
         pred = self.model.predict(img_np)
         pred = np.argmax(pred, axis=1)[0]
         # Optionally save the input and output
         if self.debug > 0:
-            self.__save_frame_randomly(frame_np, img_np, pred)
+            self.__save_frame_randomly(frame_np, trans_np, pred)
         
         # Return the predicted class
         return pred
