@@ -1,6 +1,7 @@
 import classifier
 from classifier import CLASS_DICT
 import image_reader
+import category_controller
 
 import time
 
@@ -8,8 +9,11 @@ def run_test():
     model_path = 'model/model_20201126_1448'
     url = "rtsp://192.168.1.100:8080/h264_ulaw.sdp"
 
+    PREDICTION_DELAY_SEC = 1 
+
     predictor = classifier.Predictor(model_path)
     img_reader = image_reader.ImageReader(url)
+    category_controller = CategoryController()
 
     print('Starting the test')
     while True:
@@ -17,8 +21,12 @@ def run_test():
         if has_frame:
             pred = predictor.predict_on_frame(frame_np)
             print('Prediction:', CLASS_DICT[pred])
-            # Wait for 2 seconds
-            time.sleep(5)
+            
+            # Move the controller based on predictions
+            category_controller.move_controller(pred)
+
+            # Wait for few seconds
+            time.sleep(PREDICTION_DELAY_SEC)
         else:
             print('No frame captured! Exiting now..')
             img_reader.close()

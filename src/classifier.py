@@ -17,7 +17,9 @@ STD_CROP_LTRB = (0, 650, I_WIDTH, I_HEIGHT-750)
 STD_SHAPE = (256, 256)
 
 # Dict to decode the predictions
-CLASS_DICT = {0: 'GOOD', 1: 'BAD'}
+GOOD = 0
+BAD = 1
+CLASS_DICT = {GOOD: 'GOOD', BAD: 'BAD'}
 #-----------------------------------------------------------
 
 class Predictor:
