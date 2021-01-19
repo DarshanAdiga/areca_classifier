@@ -3,7 +3,7 @@ import time
 
 class StepperController():
     def __init__(self, step_delay_ms=2, move_steps=80): 
-        self.step_delay = int(step_delay_ms / 1000) # Convert ms to seconds
+        self.step_delay = int(step_delay_ms) / 1000 # Convert ms to seconds
         
         self.move_steps = move_steps # Number of steps move in each direction
 
@@ -16,7 +16,7 @@ class StepperController():
  
         # adjust if different
         self.step_count = 4
-        self.seq = range(0, self.step_count)
+        self.seq = list(range(0, self.step_count))
         self.seq[0] = [1,0,0,0]
         self.seq[1] = [0,1,0,0]
         self.seq[2] = [0,0,1,0]
@@ -50,7 +50,9 @@ class StepperController():
 if __name__ == '__main__':
     sc = StepperController()
     while True:
-        steps = raw_input("How many steps forward? ")
-        sc.forward(int(steps))
-        steps = raw_input("How many steps backwards? ")
-        sc.backwards(int(steps))
+        print("Going forward")
+        sc.forward()
+        time.sleep(5)
+        print("Going backward")
+        sc.backward()
+        time.sleep(5)

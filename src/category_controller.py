@@ -28,3 +28,23 @@ class CategoryController():
         # Update the current state of the controller
         self.current_category = category
         return None
+
+if __name__ == '__main__':
+    import time
+    cc = CategoryController()
+    
+    print('Moving GOOD')
+    cc.move_controller(GOOD)
+    time.sleep(3)
+
+    print('Moving BAD')
+    cc.move_controller(BAD)
+    time.sleep(3)
+
+    print('Moving GOOD')
+    cc.move_controller(GOOD)
+    time.sleep(3)
+
+    print('Moving BAD')
+    cc.move_controller(BAD)
+    time.sleep(3)
