@@ -1,5 +1,6 @@
 from stepper_controller import StepperController
 from classifier import GOOD, BAD, CLASS_DICT
+from mqtt_service import MqttService
 
 class CategoryController():
     def __init__(self):
@@ -30,21 +31,17 @@ class CategoryController():
         return None
 
 if __name__ == '__main__':
-    import time
-    cc = CategoryController()
-    
-    print('Moving GOOD')
-    cc.move_controller(GOOD)
-    time.sleep(3)
+    category_controller = CategoryController()
 
-    print('Moving BAD')
-    cc.move_controller(BAD)
-    time.sleep(3)
+    MQTT_BROKER_HOST = "localhost"
+    MQTT_TOPIC = "areca"
+    m_subscriber = MqttService(MQTT_TOPIC, host=MQTT_BROKER_HOST)
 
-    print('Moving GOOD')
-    cc.move_controller(GOOD)
-    time.sleep(3)
+    def on_message(msg):
+        """Receive the MQTT message and move the controller"""
+        pred = int(msg)
+        print('Received:', str(pred))
+        category_controller.move_controller(pred)
 
-    print('Moving BAD')
-    cc.move_controller(BAD)
-    time.sleep(3)
+    # Register and wait continuously for the messages
+    m_subscriber.subscribe_and_wait(on_message)
